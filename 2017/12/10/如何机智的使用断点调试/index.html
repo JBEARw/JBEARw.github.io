@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="断点 debug," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="断点调试是我们在日常开发中使用最多的手段，在程序某一个位置打上断点来一步一步跟踪程序执行的流程，根据变量的值来找到程序的bug。　　首先我们要知道Xcode内置的调试器是LLDB(Xcode5前的调试器是GDB，有兴趣的可以了解一下)，它和LLVM编译器一起来帮助开发者进行更精准的流程控制以及调试功能。">
+<meta name="keywords" content="断点 debug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何机智的使用断点调试">
+<meta property="og:url" content="http://wbear.top/2017/12/10/如何机智的使用断点调试/index.html">
+<meta property="og:site_name" content="WBearJ的博客">
+<meta property="og:description" content="断点调试是我们在日常开发中使用最多的手段，在程序某一个位置打上断点来一步一步跟踪程序执行的流程，根据变量的值来找到程序的bug。　　首先我们要知道Xcode内置的调试器是LLDB(Xcode5前的调试器是GDB，有兴趣的可以了解一下)，它和LLVM编译器一起来帮助开发者进行更精准的流程控制以及调试功能。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-1.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-2.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-3.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-4.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-5.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-6.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-7.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-8.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-9.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-10.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-11.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-12.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-13.png">
+<meta property="og:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-14.png">
+<meta property="og:updated_time" content="2018-03-20T01:45:24.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何机智的使用断点调试">
+<meta name="twitter:description" content="断点调试是我们在日常开发中使用最多的手段，在程序某一个位置打上断点来一步一步跟踪程序执行的流程，根据变量的值来找到程序的bug。　　首先我们要知道Xcode内置的调试器是LLDB(Xcode5前的调试器是GDB，有兴趣的可以了解一下)，它和LLVM编译器一起来帮助开发者进行更精准的流程控制以及调试功能。">
+<meta name="twitter:image" content="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wbear.top/2017/12/10/如何机智的使用断点调试/"/>
+
+
+
+
+
+  <title>如何机智的使用断点调试 | WBearJ的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WBearJ的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wbear.top/2017/12/10/如何机智的使用断点调试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JBEARw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WBearJ的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何机智的使用断点调试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T00:00:00+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　断点调试是我们在日常开发中使用最多的手段，在程序某一个位置打上断点来一步一步跟踪程序执行的流程，根据变量的值来找到程序的bug。<br>　　首先我们要知道Xcode内置的调试器是LLDB(Xcode5前的调试器是GDB，有兴趣的可以<a href="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/gdb_to_lldb_transition_guide/document/Introduction.html" target="_blank" rel="external">了解一下</a>)，它和LLVM编译器一起来帮助开发者进行更精准的流程控制以及调试功能。<a id="more"></a></p>
+<p>首先在调试界面我们会看到下面按钮:<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-1.png"><br>然后在调试按钮下方会有一列参数:<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-2.png"><br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-3.png"><br>Tips:在我们需要观察一个变量变化情况的时候只需要点击’watch’选项就可以监视其变化<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-4.png"><br>以上则是平常比较常用的可视化的调试功能。现在让我们回到LLDB本身的调试指令，我们在调试控制台里使用指令来帮助我们更方便的调试程序<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-5.png"><br>(在控制台中输入-help，则会展示出所有的指令以及意义)</p>
+<p>　　在这里我们来分析一些比较常用的指令</p>
+<p><font size="6"><strong>po指令</strong></font><br>　　po指令是在调试中最常使用的指令，在断点状态下在控制台输入 po <any> 则会打印出any的具体内容<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-6.png"></any></p>
+<p><font size="6"><strong>image指令</strong></font><br>　　这个是很重要但是平常很少人会使用的一个指令，我觉得这个指令在平常调试中是很实用的一个指令，如果我在一个地方写上这样的一段代码<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-7.png"><br>则程序会crash，控制台会打印以下信息:</p>
+<p><pre><br>Terminating app due to uncaught exception ‘NSRangeException’, reason: ‘<strong><em> -[__NSArrayI objectAtIndexedSubscript:]: index 2 beyond bounds [0 .. 1]’
+</em></strong> First throw call stack:<br>(<br>    0   CoreFoundation                      0x00000001073bd12b <strong>exceptionPreprocess + 171<br>    1   libobjc.A.dylib                     0x0000000106a51f41 objc_exception_throw + 48<br>    2   CoreFoundation                      0x00000001073fd0cc _CFThrowFormattedException + 194<br>    3   CoreFoundation                      0x0000000107470890 +[</strong>NSArrayI allocWithZone:] + 0<br>    4   breakpointDemo                      0x000000010614564e -[ViewController viewDidLoad] + 174<br>    5   UIKit                               0x00000001079e346c -[UIViewController loadViewIfRequired] + 1235<br>    6   UIKit                               0x00000001079e38b9 -[UIViewController view] + 27<br>    7   UIKit                               0x00000001078ae7cf -[UIWindow addRootViewControllerViewIfPossible] + 122<br>    8   UIKit                               0x00000001078aeed7 -[UIWindow _setHidden:forced:] + 294<br>    9   UIKit                               0x00000001078c1e54 -[UIWindow makeKeyAndVisible] + 42<br>    10  UIKit                               0x00000001078348b8 -[UIApplication _callInitializationDelegatesForMainScene:transitionContext:] + 4737<br>    11  UIKit                               0x0000000107839aeb -[UIApplication _runWithMainScene:transitionContext:completion:] + 1720<br>    12  UIKit                               0x0000000107c036f8 <strong>111-[</strong>UICanvasLifecycleMonitor_Compatability _scheduleFirstCommitForScene:transition:firstActivation:completion:]_block_invoke + 924<br>    13  UIKit                               0x0000000107fd94c8 +[_UICanvas _enqueuePostSettingUpdateTransactionBlock:] + 153<br>    14  UIKit                               0x0000000107c032f1 -[<strong>UICanvasLifecycleMonitor_Compatability _scheduleFirstCommitForScene:transition:firstActivation:completion:] + 249<br>    15  UIKit                               0x0000000107c03b6b -[</strong>UICanvasLifecycleMonitor_Compatability activateEventsOnly:withContext:completion:] + 696<br>    16  UIKit                               0x0000000108581a69 <strong>82-[_UIApplicationCanvas _transitionLifecycleStateWithTransitionContext:completion:]_block_invoke + 262<br>    17  UIKit                               0x0000000108581922 -[_UIApplicationCanvas _transitionLifecycleStateWithTransitionContext:completion:] + 444<br>    18  UIKit                               0x000000010825e9c8 </strong>125-[_UICanvasLifecycleSettingsDiffAction performActionsForCanvas:withUpdatedScene:settingsDiff:fromSettings:transitionContext:]_block_invoke + 221<br>    19  UIKit                               0x000000010845db06 _performActionsWithDelayForTransitionContext + 100<br>    20  UIKit                               0x000000010825e88b -[_UICanvasLifecycleSettingsDiffAction performActionsForCanvas:withUpdatedScene:settingsDiff:fromSettings:transitionContext:] + 231<br>    21  UIKit                               0x0000000107fd8b25 -[_UICanvas scene:didUpdateWithDiff:transitionContext:completion:] + 392<br>    22  UIKit                               0x000000010783836a -[UIApplication workspace:didCreateScene:withTransitionContext:completion:] + 523<br>    23  UIKit                               0x0000000107e13605 -[UIApplicationSceneClientAgent scene:didInitializeWithEvent:completion:] + 369<br>    24  FrontBoardServices                  0x000000010bb0acc0 -[FBSSceneImpl _didCreateWithTransitionContext:completion:] + 338<br>    25  FrontBoardServices                  0x000000010bb137b5 <strong>56-[FBSWorkspace client:handleCreateScene:withCompletion:]_block_invoke_2 + 235<br>    26  libdispatch.dylib                   0x000000010ad6933d _dispatch_client_callout + 8<br>    27  libdispatch.dylib                   0x000000010ad6e9f3 _dispatch_block_invoke_direct + 592<br>    28  FrontBoardServices                  0x000000010bb3f498 </strong>FBSSERIALQUEUE_IS_CALLING_OUT_TO_A_BLOCK<strong> + 24<br>    29  FrontBoardServices                  0x000000010bb3f14e -[FBSSerialQueue _performNext] + 464<br>    30  FrontBoardServices                  0x000000010bb3f6bd -[FBSSerialQueue _performNextFromRunLoopSource] + 45<br>    31  CoreFoundation                      0x0000000107360101 </strong>CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION<strong> + 17<br>    32  CoreFoundation                      0x00000001073fff71 </strong>CFRunLoopDoSource0 + 81<br>    33  CoreFoundation                      0x0000000107344a19 <strong>CFRunLoopDoSources0 + 185<br>    34  CoreFoundation                      0x0000000107343fff </strong>CFRunLoopRun + 1279<br>    35  CoreFoundation                      0x0000000107343889 CFRunLoopRunSpecific + 409<br>    36  GraphicsServices                    0x000000010c3d39c6 GSEventRunModal + 62<br>    37  UIKit                               0x000000010783b5d6 UIApplicationMain + 159<br>    38  breakpointDemo                      0x000000010614575f main + 111<br>    39  libdyld.dylib                       0x000000010ade5d81 start + 1<br>)<br>libc++abi.dylib: terminating with uncaught exception of type NSException<br></pre><br>在这么一大串的信息中找到错误位置其实挺麻烦的，这时我们可以使用image指令来帮助我们找到具体的错误位置。首先大概浏览一下错误信息可以发现是在第4个信息是导致crash的原因，记录下地址<code>0x000000010614564e</code>，然后我们在控制台输入<code>image lookup --address &lt;address&gt;</code>可以看到:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(lldb) image lookup --address 0x000000010614564e</div><div class="line">      Address: breakpointDemo[0x000000010000164e] (breakpointDemo.__TEXT.__text + 174)</div><div class="line">      Summary: breakpointDemo`-[ViewController viewDidLoad] + 174 at ViewController.m:21</div><div class="line">(lldb)</div></pre></td></tr></table></figure></p>
+<p>可以很明显的看到错误位置——是在ViewController中的.m文件里的21行。这两个我是平常用的比较多的指令，其他如果有什么更加厉害的指令——请告诉我，我会虚心的学习:)</p>
+<p>　　然后让我们在回到断点本身，断点在开发中也是分不同类型的断点的，比如以下类型:</p>
+<p><font size="6"><strong>全局断点</strong></font><br>　　有时候在程序发生crash的时候，程序会定位到main函数里，控制台也是没有任何信息…像这种我们就可以使用全局断点来找到出错的栈低信息<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-8.png"></p>
+<p><font size="6"><strong>条件断点</strong></font><br>　　这个比起上面的全局断点，这个可要更加的厉害了，下面举几个例子大家看的就比较明显了。首先我们看下下面的代码<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-9.png"><br>然后我们右键点击断点条，选择<code>Edit Breakpoint...</code><br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-10.png"><br>然后在condition中输入我们想要的条件<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-11.png"><br>这样只有在<code>a == 20</code>的时候才会触发这个断点(不一定是数字，其他类型也可以作为触发条件)，当然我们也可以使用condition下面的ignore功能，比如我们想在10次的时候出发断点，则在ignore的值改成10就可以了。</p>
+<p>下面一个例子:<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-12.png"><br>我们在这里使用另外一个全局断点，然后在symbol中输入<code>viewWillAppear</code>条件，则在程序运行中只要是运行到了函数名为<code>viewWillAppear</code>的时候就会触发断点。</p>
+<p><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-13.png"><br>　　这里我们就可以拓展一下，我们在开发中会遇到<code>unrecognized selector sent to instance &lt;address&gt;</code>这种错误，这个我们就可以使用<code>-[NSObject(NSObject) doesNotRecognizeSelector:]</code>条件来定位到具体位置。<br><img src="http://wbearjimg.oss-cn-shenzhen.aliyuncs.com/iOS/breakpoint-14.png"></p>
+<p>　　以上就是目前比较常用的调试方式，如果后期遇到其他黑科技，我也会回来更新的！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/断点-debug/" rel="tag"># 断点 debug</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/26/where？when-and-how-如何正确的使用单例！/" rel="next" title="where and how?如何正确的使用单例！">
+                <i class="fa fa-chevron-left"></i> where and how?如何正确的使用单例！
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/31/分享一些目前主流的设计模式/" rel="prev" title="分享一些目前主流的设计模式">
+                分享一些目前主流的设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="JBEARw" />
+            
+              <p class="site-author-name" itemprop="name">JBEARw</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/JBEARw" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://steamcommunity.com/profiles/76561198114105672" target="_blank" title="Steam">
+                    
+                      <i class="fa fa-fw fa-steam"></i>Steam</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JBEARw</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

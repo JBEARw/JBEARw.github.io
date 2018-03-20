@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="WBear" />
+  <meta name="keywords" content="单例," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="WBearJ的博客">
-<meta property="og:url" content="http://wbear.top/tags/LLVM-Clang/index.html">
+<meta name="description" content="单例在日常工作中应该算是使用频率较高的一种模式，但是我们在使用过程中也有很多需要注意的地方——  我们应该在什么地方使用单例？ 我们应该如何使用单例？首先我们先了解单例是一种怎样的模式和有什么样的优缺点。优点：   在程序的生命中期中单例有且只会创建一次. 对于一些经常需要创建和销毁的对象，单例可以减少系统的开销.缺点： 太多单例会加重内存的负荷. 在多人项目中，开发人员必须要注意单例对象不能">
+<meta name="keywords" content="单例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="where and how?如何正确的使用单例！">
+<meta property="og:url" content="http://wbear.top/2017/11/26/where？when-and-how-如何正确的使用单例！/index.html">
 <meta property="og:site_name" content="WBearJ的博客">
+<meta property="og:description" content="单例在日常工作中应该算是使用频率较高的一种模式，但是我们在使用过程中也有很多需要注意的地方——  我们应该在什么地方使用单例？ 我们应该如何使用单例？首先我们先了解单例是一种怎样的模式和有什么样的优缺点。优点：   在程序的生命中期中单例有且只会创建一次. 对于一些经常需要创建和销毁的对象，单例可以减少系统的开销.缺点： 太多单例会加重内存的负荷. 在多人项目中，开发人员必须要注意单例对象不能">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-20T01:44:40.491Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WBearJ的博客">
+<meta name="twitter:title" content="where and how?如何正确的使用单例！">
+<meta name="twitter:description" content="单例在日常工作中应该算是使用频率较高的一种模式，但是我们在使用过程中也有很多需要注意的地方——  我们应该在什么地方使用单例？ 我们应该如何使用单例？首先我们先了解单例是一种怎样的模式和有什么样的优缺点。优点：   在程序的生命中期中单例有且只会创建一次. 对于一些经常需要创建和销毁的对象，单例可以减少系统的开销.缺点： 太多单例会加重内存的负荷. 在多人项目中，开发人员必须要注意单例对象不能">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://wbear.top/tags/LLVM-Clang/"/>
+  <link rel="canonical" href="http://wbear.top/2017/11/26/where？when-and-how-如何正确的使用单例！/"/>
 
 
 
 
 
-  <title>标签: LLVM Clang | WBearJ的博客</title>
+  <title>where and how?如何正确的使用单例！ | WBearJ的博客</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,54 +239,186 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>LLVM Clang<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wbear.top/2017/11/26/where？when-and-how-如何正确的使用单例！/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JBEARw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WBearJ的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/12/iOS-LLVM-Clang/" itemprop="url">
-              
-                <span itemprop="name">iOS LLVM Clang初探</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">where and how?如何正确的使用单例！</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T00:00:00+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T00:00:00+08:00">
+                2017-11-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  单例在日常工作中应该算是使用频率较高的一种模式，但是我们在使用过程中也有很多需要注意的地方——</p>
+<ol>
+<li>我们应该在什么地方使用单例？</li>
+<li>我们应该如何使用单例？<br>首先我们先了解单例是一种怎样的模式和有什么样的优缺点。<br>优点：</li>
+</ol>
+<ul>
+<li>在程序的生命中期中单例有且只会创建一次.</li>
+<li>对于一些经常需要创建和销毁的对象，单例可以减少系统的开销.<br>缺点：</li>
+<li>太多单例会加重内存的负荷.</li>
+<li>在多人项目中，开发人员必须要注意单例对象不能在其他地方新建(new)。</li>
+<li>单例没有抽象层，因此单例的扩展有很大的困难。</li>
+</ul>
+<p>　　一般情况下我们会把User对象存为单例，因为在应用程序中如果不进行注销行为的话，User是始终存在于APP整个生命周期的。<br>同理例如-网络请求，音乐播放器等。  </p>
+<center><strong>目前能理解的比较浅，能写的也比较少，以后遇到相应问题在回来更新</strong></center>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/单例/" rel="tag"># 单例</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/iOS-LLVM-Clang/" rel="next" title="iOS LLVM Clang初探">
+                <i class="fa fa-chevron-left"></i> iOS LLVM Clang初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/10/如何机智的使用断点调试/" rel="prev" title="如何机智的使用断点调试">
+                如何机智的使用断点调试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -289,6 +426,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -523,6 +664,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
